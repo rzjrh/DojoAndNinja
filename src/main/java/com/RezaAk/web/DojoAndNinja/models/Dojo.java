@@ -13,6 +13,7 @@ import javax.persistence.PreUpdate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+//
 @Entity
 public class Dojo {
 	@Id

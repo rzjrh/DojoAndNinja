@@ -1,5 +1,8 @@
 package com.RezaAk.web.DojoAndNinja.controllers;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +22,9 @@ import com.RezaAk.web.DojoAndNinja.servces.NinjaService;
 @Controller
 @RequestMapping("/")
 public class DojoController {
-	@Autowired
+	//@Autowired
 	private DojoService dojoService;
-	@Autowired
+	//@Autowired
 	private NinjaService ninjaService;
 	public DojoController(DojoService dojoService) {
 		this.dojoService = dojoService;
@@ -48,9 +51,16 @@ public class DojoController {
 	}
 	@RequestMapping("/dojos/{id}")
 	public String viewDojo(Model model, @PathVariable("id") Long id) {
-		Dojo dojo = dojoService.getOne(id);
-		model.addAttribute("dojo", dojo);
-		model.addAttribute("ninjas", dojo.getNinjas());
-		return "showdojo.jsp";
+		try {
+			Optional<Dojo> dojo = dojoService.getOne(id);
+			model.addAttribute("dojo", dojo);
+			model.addAttribute("ninjas", dojo.get().getNinjas());
+			return "showdojo.jsp";
+		}
+		catch (NoSuchElementException e) {
+			model.addAttribute("errorMessage", "Not Fouded");
+			return "error.jsp";
+		}
+		
 	}
 }

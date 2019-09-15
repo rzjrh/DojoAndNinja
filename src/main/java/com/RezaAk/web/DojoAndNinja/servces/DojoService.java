@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.RezaAk.web.DojoAndNinja.models.Dojo;
 import com.RezaAk.web.DojoAndNinja.repositories.DojoRepo;
 
+
 @Service
 public class DojoService {
 	@Autowired
@@ -24,5 +25,6 @@ public class DojoService {
 	}
 	public Optional<Dojo> getOne(Long id) {
 		return dojoRepo.findById(id);
+		
 	}
 }
